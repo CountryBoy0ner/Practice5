@@ -1,34 +1,74 @@
 package org.example;
 
 public class Euro {
-    private int valueInCents;
+    private final int VALUE_IN_CENTS;
 
     public Euro(int value) {
-        this.valueInCents = value;
+        this.VALUE_IN_CENTS = value;
     }
 
     public Euro() {
+        this.VALUE_IN_CENTS = 0;
     }
 
-    public int getValueInCents() {
-        return valueInCents;
+    public Euro(Euro euro) {
+        this.VALUE_IN_CENTS = euro.VALUE_IN_CENTS;
     }
 
-    public Euro add(int other) {
-        return new Euro(this.valueInCents + other);
+    public Euro(int euros, int cents) {
+        this.VALUE_IN_CENTS = (euros * 100) + cents;
     }
 
-    public Euro subtract(int other) {
-        return new Euro(this.valueInCents - other);
+    public int getVALUE_IN_CENTS() {
+        return VALUE_IN_CENTS;
     }
 
+    public int getEuro() {
+        return VALUE_IN_CENTS / 100;
+    }
 
-    public String convertToEuro(int value) {
-        return String.format("%d.%02d", value / 100, Math.abs(value % 100));
+    public int getCoins() {
+        return VALUE_IN_CENTS % 100;
+    }
+
+    public Euro add(Euro euro) {
+        return new Euro(VALUE_IN_CENTS + euro.getVALUE_IN_CENTS());
+    }
+
+    public Euro sub(Euro euro) {
+        return new Euro(VALUE_IN_CENTS - euro.getVALUE_IN_CENTS());
+    }
+
+    public Euro round(RoundMethod roundMethod, int d) {
+        return new Euro(round(VALUE_IN_CENTS, roundMethod, d));
+    }
+
+    private static Euro round(double roundedValue, RoundMethod roundMethod, int d) {
+        int tenPow = (int) Math.pow(10, d);
+        int result = (int) roundMethod.roundFunction(roundedValue / tenPow) * tenPow;
+        return new Euro(result);
+    }
+
+    public Euro mul(int k) {
+        return new Euro(VALUE_IN_CENTS * k);
+    }
+
+    public Euro mul(double k, RoundMethod roundMethod, int d) {
+        int tenPow = (int) Math.pow(10, d);
+        return new Euro(round(VALUE_IN_CENTS * k / tenPow, roundMethod, d));
+    }
+
+    public int compareTo(Euro euro) {
+        return Integer.compare(VALUE_IN_CENTS, euro.VALUE_IN_CENTS);
     }
 
     @Override
     public String toString() {
-        return String.format("%.2f EUR", valueInCents / 100.0);
+     return convertToEuro();
+
+    }
+
+    public String convertToEuro() {
+        return String.format("%d.%02d", getVALUE_IN_CENTS() / 100, Math.abs(getVALUE_IN_CENTS() % 100));
     }
 }

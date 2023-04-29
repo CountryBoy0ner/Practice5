@@ -8,6 +8,8 @@ public class TransportPurchase extends AbstractPurchase {
         this.shippingCost = shippingCost;
     }
 
+    public TransportPurchase() {}
+
     public Euro getShippingCost() {
         return shippingCost;
     }
@@ -19,12 +21,11 @@ public class TransportPurchase extends AbstractPurchase {
     @Override
 
     public String toString() {
-        return String.format("%s;%s;%s;%s", getClass().getSimpleName(),
-                getProduct().getName(), getQuantity(), getCost());
+        return super.toString()+";"+shippingCost.convertToEuro();
     }
 
     @Override
-    public Euro getCost() {
-        return new Euro((product.getPriceInCents().getValueInCents() * this.quantity)+shippingCost.getValueInCents());
+    protected Euro getFinalCost(Euro baseCost) {
+        return baseCost.add(shippingCost);
     }
 }
