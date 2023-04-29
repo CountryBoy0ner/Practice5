@@ -3,39 +3,43 @@ package org.example;
 public class Product {
 
     private String name;
-    private Euro priceInCents;
+    private Euro priceInEuro;
 
-    public Product(String name, Euro priceInCents) {
+    public Product(String name, Euro priceInEuro) {
         this.name = name;
-        this.priceInCents = priceInCents;
+        this.priceInEuro = priceInEuro;
+    }
+
+    public Product( Euro priceInEuro) {
+        this.priceInEuro = priceInEuro;     //7task
     }
 
     public Product() {
+        this.name = "";
+        this.priceInEuro = new Euro(0) ;
     }
 
     public String getName() {
         return name;
     }
 
-    public Euro getPriceInCents() {
-        return priceInCents;
+    public Euro getPriceInEuro() {
+        return priceInEuro;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPriceInCents(Euro priceInCents) {
-        this.priceInCents = priceInCents;
+    public void setPriceInEuro(Euro priceInEuro) {
+        this.priceInEuro = priceInEuro;
     }
 
     public String toString() {
-        return convertToEuro(priceInCents);
+        return String.format("%s;%s", name, priceInEuro);
     }
 
-    private String convertToEuro(Euro priceInCents) {
-        return priceInCents.convertToEuro(priceInCents.getValueInCents());
-    }
+
 
 
 }
