@@ -33,10 +33,10 @@ public class Runner {
 
     public static int search(AbstractPurchase[] purchases) {
         Product product1 = new Product("target", new Euro(0));
-        AbstractPurchase target =  new TransportPurchase(uniqueProducts, 10, new Euro(500));
+        AbstractPurchase target =  new TransportPurchase(product1, 10, new Euro(500));
         int index = Arrays.binarySearch(purchases, target);
         if (index < 0) {
-            throw new RuntimeException("search failed");
+                throw new RuntimeException("search failed");
         } else {
             return index;
         }
